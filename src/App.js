@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Greeting from './components/Greeting';
+import Login from './components/Login';
+import DateWrapper from './components/DateWrapper';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      isLogged: false,
+    };
+  }
+
+  updateUsername = (username) => {
+    this.setState({ username, isLogged: true });
+  };
+
+  logout = () => {
+    this.setState({ isLogged: false, username: '' });
+  };
+
+  render() {
+    return (
+      <div>
+        {this.state.isLogged ? (
+          <div>
+            <Greeting name={this.state.username} />
+            <DateWrapper />
+            <button onClick={this.logout}>Вийти</button>
+          </div>
+        ) : (
+          <Login updateUsername={this.updateUsername} />
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;
